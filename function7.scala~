@@ -1,0 +1,5 @@
+sqlContext.sql("CREATE TABLE places (gPlusPlaceId varchar(50), name varchar(50), price varchar(20), address varchar(100), hours varchar(150), phone varchar(50), closed boolean) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TextFile")
+sqlContext.sql("LOAD DATA INPATH '/user/cloudera/places.csv' OVERWRITE INTO TABLE places")
+val df = sqlContext.sql("select * from places")
+val newDF = df.groupBy("closed").count
+newDF.show()
